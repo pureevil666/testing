@@ -1,28 +1,34 @@
 class Question:
-    question_list = {}
+    question_dict = {}
+    question_list = []
 
     def create_ask(self, ask):
         self.ask = str(ask)
-        self.question_list[ask] = ()
+        self.question_dict[ask] = ()
 
     def create_answer(self, answer, validity=False):
         self.answer = answer
         self.validity = validity
         self.para = [self.answer, self.validity]
-        self.question_list[self.ask] += (self.para,)
+        self.question_dict[self.ask] += (self.para,)
 
     def show_test_block(self):
         print(f'Вопрос: {self.ask}')
         print("Ответы: ")
-        for el in self.question_list[self.ask]:
+        for el in self.question_dict[self.ask]:
             print(el)
 
     @staticmethod
     def show_question_list():
-        for el in Question.question_list:
+        for el in Question.question_dict:
             print(f"\nВопрос: {el}")
-            for answer in Question.question_list[el]:
+            for answer in Question.question_dict[el]:
                 print(f"    {answer[0]} - {answer[1]} ")
+
+    @staticmethod
+    def create_questions_list():
+        for key in Question.question_dict:
+            Question.question_list.append(key)
 
 
 question1 = Question()
