@@ -1,29 +1,10 @@
 from tkinter import *
 from tkinter.ttk import *
+from questions import *
 
 WINDOW_WIDTH = 600
 WINDOW_HEIGHT = 300
 test_subject = "Тест по информатике 9 класс"
-
-
-class Question:
-    question_list = {}
-
-    def create_ask(self, ask):
-        self.ask = str(ask)
-        self.question_list[ask] = ()
-
-    def create_answer(self, answer, validity=False):
-        self.answer = answer
-        self.validity = validity
-        self.para = [self.answer, self.validity]
-        self.question_list[self.ask] += (self.para,)
-
-    def show_test_block(self):
-        print(f'Вопрос: {self.ask}')
-        print("Ответы: ")
-        for el in self.question_list[self.ask]:
-            print(el)
 
 
 def create_main_window():
@@ -43,4 +24,5 @@ def create_frame():
     pass
 
 
+Question.show_question_list()
 create_main_window()
