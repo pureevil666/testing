@@ -3,9 +3,10 @@ from tkinter.ttk import *
 from questions import Question as Q
 
 WINDOW_WIDTH = 600
-WINDOW_HEIGHT = 300
+WINDOW_HEIGHT = 250
 test_subject = "Тест по информатике 9 класс"
 number = 1
+score = 0
 
 
 def create_frame():
@@ -16,22 +17,39 @@ def create_frame():
         ask_text = Q.question_list[number - 1]
         ask = Label(ask_frame, wraplength=550, text=ask_text)
         ask.pack(pady=10, padx=10, anchor='w', )
-
-        count = 0
         radio_value = IntVar()
-        radio_value.set(0)
+        radio_value.set(1)
 
-        for answer in Q.question_dict[Q.question_list[number - 1]]:
-            text = answer[0]
-            slice_index = 70
-            if len(text) >= slice_index:
-                text = word_wrap(text, slice_index)
-            Radiobutton(ask_frame, text=text, variable=radio_value, value=count).pack(anchor='w', padx=10)
-            count += 1
-        button = Button(ask_frame, text='Далее', width=93, command=next_frame)
-        button.pack()
+        Radiobutton(ask_frame, text=Q.get_answer_text(number, 1), variable=radio_value, value=1).pack(anchor='w', padx=5)
+        Radiobutton(ask_frame, text=Q.get_answer_text(number, 2), variable=radio_value, value=2).pack(anchor='w', padx=5)
+        Radiobutton(ask_frame, text=Q.get_answer_text(number, 3), variable=radio_value, value=3).pack(anchor='w', padx=5)
+
+        button = Button(ask_frame, text='Далее', width=93, command=lambda: next_frame(radio_value.get()))
+        button.pack(pady=10)
+
         number += 1
         break
+
+
+def result():
+    global result_frame
+    ask_frame.destroy()
+    result_frame = LabelFrame(main_frame)
+    result_frame.pack()
+    Label(result_frame, text=f'Ваш результат: {score} правильных ответов из {len(Q.question_dict)}',
+          font=('Arial', 16), anchor='c').pack(pady=30, padx=50)
+    Label(result_frame, text=f'Оценка: {round(score / len(Q.question_dict) * 5)}',
+          font=('Arial', 16), anchor='c').pack(pady=10, padx=50)
+    Button(result_frame, text="Пройти заново", width=93, command=lambda: restart()).pack(pady=10)
+
+
+def restart():
+    global result_frame, score, number, ask_frame
+    result_frame.destroy()
+    ask_frame.destroy()
+    score = 0
+    number = 1
+    create_frame()
 
 
 def word_wrap(text, slice_index):
@@ -50,9 +68,19 @@ def word_wrap(text, slice_index):
     return new_text
 
 
-def next_frame():
-    ask_frame.destroy()
-    create_frame()
+def check_answer(answer_number):
+    global score
+    if Q.get_answer_value(number - 1, answer_number):
+        score += 1
+
+
+def next_frame(checked_answer):
+    check_answer(checked_answer)
+    if number == len(Q.question_dict) + 1:
+        result()
+    else:
+        ask_frame.destroy()
+        create_frame()
 
 
 win = Tk()
@@ -62,9 +90,5 @@ main_frame = Frame(win, width=WINDOW_WIDTH - 15, height=WINDOW_HEIGHT - 15)
 main_frame.pack(padx=10, pady=10, )
 main_label = Label(main_frame, text=test_subject, font=("Arial", 14))
 main_label.pack()
-ask_frame = LabelFrame(main_frame)
 create_frame()
-
-# Q.show_question_list()
-# Q.show_test()
 win.mainloop()
