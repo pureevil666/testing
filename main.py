@@ -13,7 +13,8 @@ def create_frame():
     for number in range(number, len(Q.question_dict) + 1):
         ask_frame = LabelFrame(main_frame, text=f'Вопрос {number} из {len(Q.question_dict)}')
         ask_frame.pack()
-        ask = Label(ask_frame, text=Q.question_list[number - 1])
+        ask_text = Q.question_list[number - 1]
+        ask = Label(ask_frame, wraplength=550, text=ask_text)
         ask.pack(pady=10, padx=10, anchor='w', )
 
         count = 0
@@ -37,14 +38,10 @@ def word_wrap(text, slice_index):
     out_value = True
     index = slice_index
     new_text = ''
-    print(text)
-    print(index)
     while out_value:
-        print(index)
         try:
             if text[index] == ' ':
-                new_text = text[0:index]
-                new_text += '\n' + text[index+1:]
+                new_text = text[0:index] + '\n' + text[index + 1:]
                 out_value = False
             else:
                 index += 1
