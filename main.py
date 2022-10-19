@@ -3,7 +3,7 @@ from tkinter.ttk import *
 from questions import Question as Q
 
 WINDOW_WIDTH = 600
-WINDOW_HEIGHT = 250
+WINDOW_HEIGHT = 300
 test_subject = "Тест по информатике 9 класс"
 number = 1
 score = 0
@@ -20,9 +20,11 @@ def create_frame():
         radio_value = IntVar()
         radio_value.set(1)
 
-        Radiobutton(ask_frame, text=Q.get_answer_text(number, 1), variable=radio_value, value=1).pack(anchor='w', padx=5)
-        Radiobutton(ask_frame, text=Q.get_answer_text(number, 2), variable=radio_value, value=2).pack(anchor='w', padx=5)
-        Radiobutton(ask_frame, text=Q.get_answer_text(number, 3), variable=radio_value, value=3).pack(anchor='w', padx=5)
+        for i in range(1, 4):
+            text = Q.get_answer_text(number, i)
+            if len(text) > 70:
+                text = word_wrap(text, 70)
+            Radiobutton(ask_frame, text=text, variable=radio_value, value=i).pack(anchor='w', padx=5)
 
         button = Button(ask_frame, text='Далее', width=93, command=lambda: next_frame(radio_value.get()))
         button.pack(pady=10)
@@ -91,4 +93,5 @@ main_frame.pack(padx=10, pady=10, )
 main_label = Label(main_frame, text=test_subject, font=("Arial", 14))
 main_label.pack()
 create_frame()
+Q.show_test()
 win.mainloop()
