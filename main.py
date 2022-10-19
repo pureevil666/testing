@@ -44,7 +44,7 @@ def word_wrap(text, slice_index):
         try:
             if text[index] == ' ':
                 new_text = text[0:index]
-                new_text += '\n' + text[index:]
+                new_text += '\n' + text[index+1:]
                 out_value = False
             else:
                 index += 1
