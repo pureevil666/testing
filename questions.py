@@ -38,6 +38,17 @@ class Question:
         for el in range(1, len(Question.question_list) + 1):
             print(f'{el} вопрос: {Question.question_list[el - 1]}')
 
+    @staticmethod
+    def get_answer_text(ask_number, answer_number):
+        ask_number -= 1
+        answer_number -= 1
+        return Question.question_dict[Question.question_list[ask_number]][answer_number][0]
+
+    @staticmethod
+    def get_answer_value(ask_number, answer_number):
+        ask_number -= 1
+        answer_number -= 1
+        return Question.question_dict[Question.question_list[ask_number]][answer_number][1]
 
 question1 = Question("Как называется группа файлов, которая хранится отдельной группой и имеет собственное имя ?")
 question1.create_answer("Байт")
