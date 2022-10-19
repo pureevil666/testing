@@ -5,6 +5,7 @@ class Question:
     def __init__(self, ask):
         self.ask = str(ask)
         self.question_dict[ask] = ()
+        Question.question_list.append(ask)
 
     def create_answer(self, answer, validity=False):
         self.answer = answer
@@ -19,16 +20,11 @@ class Question:
             print(el)
 
     @staticmethod
-    def show_question_list():
+    def show_test():
         for el in Question.question_dict:
             print(f"\nВопрос: {el}")
             for answer in Question.question_dict[el]:
                 print(f"    {answer[0]} - {answer[1]} ")
-
-    @staticmethod
-    def create_questions_list():
-        for key in Question.question_dict:
-            Question.question_list.append(key)
 
     @staticmethod
     def get_true_answer(ask_number):
@@ -36,6 +32,11 @@ class Question:
         for answer in Question.question_dict[Question.question_list[ask_number]]:
             if answer[1]:
                 return answer[0]
+
+    @staticmethod
+    def show_question_list():
+        for el in range(1, len(Question.question_list) + 1):
+            print(f'{el} вопрос: {Question.question_list[el - 1]}')
 
 
 question1 = Question("Как называется группа файлов, которая хранится отдельной группой и имеет собственное имя ?")
