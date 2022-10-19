@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter.ttk import *
 from questions import Question as Q
+from tkinter import messagebox
 
 WINDOW_WIDTH = 600
 WINDOW_HEIGHT = 300
@@ -18,7 +19,7 @@ def create_frame():
         ask = Label(ask_frame, wraplength=550, text=ask_text)
         ask.pack(pady=10, padx=10, anchor='w', )
         radio_value = IntVar()
-        radio_value.set(1)
+        radio_value.set(0)
 
         for i in range(1, 4):
             text = Q.get_answer_text(number, i)
@@ -77,7 +78,12 @@ def check_answer(answer_number):
 
 
 def next_frame(checked_answer):
-    check_answer(checked_answer)
+    global number
+    if checked_answer == 0:
+        messagebox.showerror(title="Ошибка", message="Вы не выбрали ответ")
+        number -= 1
+    else:
+        check_answer(checked_answer)
     if number == len(Q.question_dict) + 1:
         result()
     else:
@@ -93,5 +99,4 @@ main_frame.pack(padx=10, pady=10, )
 main_label = Label(main_frame, text=test_subject, font=("Arial", 14))
 main_label.pack()
 create_frame()
-Q.show_test()
 win.mainloop()

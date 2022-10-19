@@ -50,6 +50,7 @@ class Question:
         answer_number -= 1
         return Question.question_dict[Question.question_list[ask_number]][answer_number][1]
 
+
 question1 = Question("Как называется группа файлов, которая хранится отдельной группой и имеет собственное имя ?")
 question1.create_answer("Байт")
 question1.create_answer("Каталог", True)
