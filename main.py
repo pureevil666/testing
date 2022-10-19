@@ -94,6 +94,7 @@ def next_frame(checked_answer):
 win = Tk()
 win.geometry(f'{WINDOW_WIDTH}x{WINDOW_HEIGHT}+600+250')
 win.resizable(False, False)
+win.title(test_subject)
 main_frame = Frame(win, width=WINDOW_WIDTH - 15, height=WINDOW_HEIGHT - 15)
 main_frame.pack(padx=10, pady=10, )
 main_label = Label(main_frame, text=test_subject, font=("Arial", 14))
